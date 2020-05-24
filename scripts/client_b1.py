@@ -2,17 +2,17 @@ import socket
 import sys
 from threading import Thread
 
-client_ip = "175.55.40.7"
-client_mac = "3A:7C:88:89:0B:AF"
+client_ip = "120.32.24.2"
+client_mac = "A1:05:C9:80:6F:2E"
 
-router = ("localhost", 20_200)
-router_mac = "D3:A0:0D:59:F5:36"
+router = ("localhost", 30_200)
+router_mac = "45:1D:B0:04:0A:5E"
 
 # creating client socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # binding the socket to a port
-client.bind(("localhost", 20_001))
+client.bind(("localhost", 30_001))
 
 # connecting the socket to the router
 client.connect(router)

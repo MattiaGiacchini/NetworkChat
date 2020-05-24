@@ -10,19 +10,19 @@ mac_arp_table = {}
 available_clients = {1: "175.55.40.7", 2: "175.55.40.8", 3: "175.55.40.9", 4: "120.32.24.2", 5: "120.32.24.3", 6: "120.32.24.4"}
 
 # router mac address
-router_mac = "D3:A0:0D:59:F5:36"
+router_mac = "45:1D:B0:04:0A:5E"
 
 # socket for communication with server
 router_in = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-router_in_ip = "118.25.10.5"
+router_in_ip = "118.25.10.9"
 
 # socket for communication with clients
 router_out = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-router_out_ip = "175.55.40.1"
+router_out_ip = "120.32.24.1"
 
 # binding sockets
-router_in.bind(("localhost", 20_100))
-router_out.bind(("localhost", 20_200))
+router_in.bind(("localhost", 30_100))
+router_out.bind(("localhost", 30_200))
 
 # Server port
 server = ("localhost", 15_000)
@@ -90,22 +90,22 @@ def message_routing(original_message):
 
 def receive_messages_a1():
     while True:
-        if available_clients[1] in ip_arp_table.keys():
-            message = ip_arp_table[available_clients[1]].recv(2048).decode("utf-8")
+        if available_clients[4] in ip_arp_table.keys():
+            message = ip_arp_table[available_clients[4]].recv(2048).decode("utf-8")
             message_routing(message)
 
 
 def receive_messages_a2():
     while True:
-        if available_clients[2] in ip_arp_table.keys():
-            message = ip_arp_table[available_clients[2]].recv(2048).decode("utf-8")
+        if available_clients[5] in ip_arp_table.keys():
+            message = ip_arp_table[available_clients[5]].recv(2048).decode("utf-8")
             message_routing(message)
 
 
 def receive_messages_a3():
     while True:
-        if available_clients[3] in ip_arp_table.keys():
-            message = ip_arp_table[available_clients[3]].recv(2048).decode("utf-8")
+        if available_clients[6] in ip_arp_table.keys():
+            message = ip_arp_table[available_clients[6]].recv(2048).decode("utf-8")
             message_routing(message)
 
 

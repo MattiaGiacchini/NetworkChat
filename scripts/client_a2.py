@@ -1,13 +1,12 @@
 import socket
-import time
 import sys
 from threading import Thread
 
 client_ip = "175.55.40.8"
-client_mac = "2A:18:C4:AD:FF:C2"
+client_mac = "D9:6D:07:59:8F:5E"
 
 router = ("localhost", 20_200)
-router_mac = "E7:3B:E0:A1:11:59"
+router_mac = "D3:A0:0D:59:F5:36"
 
 # creating client socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,6 +25,11 @@ available_clients = {1: "175.55.40.7", 2: "175.55.40.8", 3: "175.55.40.9", 4: "1
 received_message = ""
 
 
+# printing the client list
+def print_clients():
+    print("\nInserisci l'IP a cui inviare un messaggio: ")
+
+
 # a simple function to unpack the message
 def get_message(source_message):
     source_mac = source_message[0:17]
@@ -41,7 +45,8 @@ def receive():
     while True:
         try:
             original_message = client.recv(2048).decode("utf8")
-            print("\n\nMessage received from: " + original_message[34:45] + "\n\t >>> " + original_message[56:])
+            print("\nMessage received from: " + original_message[17:28] + "\n\t >>> " + original_message[56:])
+            print_clients()
         except socket.error as error:
             print(error)
             break
@@ -64,7 +69,6 @@ def send():
             # sending the message to the router
             client.send(bytes(client_mac + client_ip + available_clients[destination_ip] + router_mac + message, "utf-8"))
 
-            # client.send(bytes(available_clients[destination_ip], "utf-8"))
             if message.casefold() == "quit":
                 client.close()
                 sys.exit()
@@ -74,5 +78,9 @@ def send():
             print("IP non valido, inserisci un numero compreso tra 1 e 6")
 
 
-Thread(target=receive).start()
-Thread(target=send).start()
+if __name__ == '__main__':
+    recv_thread = Thread(target=receive)
+    send_thread = Thread(target=send)
+
+    recv_thread.start()
+    send_thread.start()
